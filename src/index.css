@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+ 
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+ 
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+ 
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+ 
+    --radius: 0.5rem;
+    
+    /* App-specific color variables */
+    --stacks-purple: 264 88% 58%;
+    --stacks-soft-purple: 264 59% 92%;
+    --stacks-orange: 30 100% 50%;
+    --stacks-soft-orange: 30 100% 95%;
+    --stacks-soft-yellow: 45 100% 85%;
+    --stacks-soft-blue: 220 60% 90%;
+  }
+ 
+  .dark {
+    /* Better dark mode colors - using dark grays instead of pure black */
+    --background: 220 13% 9%;  /* #171923 - dark but not black */
+    --foreground: 0 0% 95%;    /* #f2f2f2 - softer white */
+ 
+    --card: 220 13% 11%;       /* #1e2028 - slightly lighter than bg */
+    --card-foreground: 0 0% 95%;
+ 
+    --popover: 220 13% 11%;
+    --popover-foreground: 0 0% 95%;
+ 
+    --primary: 0 0% 95%;
+    --primary-foreground: 220 13% 9%;
+ 
+    --secondary: 220 13% 15%;  /* #26272f - elevated surfaces */
+    --secondary-foreground: 0 0% 95%;
+ 
+    --muted: 220 13% 15%;
+    --muted-foreground: 0 0% 65%;  /* #a6a6a6 - better contrast */
+ 
+    --accent: 220 13% 15%;
+    --accent-foreground: 0 0% 95%;
+ 
+    --destructive: 0 75% 55%;  /* Adjusted red for dark mode */
+    --destructive-foreground: 0 0% 95%;
+ 
+    --border: 220 13% 20%;     /* #32333b - visible but subtle borders */
+    --input: 220 13% 15%;
+    --ring: 240 4.9% 83.9%;
+    
+    /* Dark mode app-specific colors */
+    --stacks-soft-yellow: 45 80% 25%;
+    --stacks-soft-blue: 220 40% 25%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Universal page container with consistent padding */
+  .stacks-container {
+    @apply px-4 py-4;
+  }
+  
+  /* Specific container for pages with tab bars (needs extra bottom padding) */
+  .stacks-container-with-tabs {
+    @apply px-4 py-4 pb-20;
+  }
+  
+  /* Routine card with better dark mode support */
+  .routine-card {
+    @apply bg-card border border-border rounded-lg p-4 mb-4 shadow-sm;
+  }
+  
+  /* Stack card styling */
+  .stack-card {
+    @apply bg-card border border-border rounded-lg p-4 shadow-sm;
+  }
+  
+  /* Progress bar styling with dark mode support */
+  .progress-bar {
+    @apply w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+  }
+  
+  .progress-bar-fill {
+    @apply h-full transition-all duration-300 ease-out rounded-full;
+  }
+}
+
+/* Stack Animation Styles */
+@keyframes gentle-wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(0.15deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-0.15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.gentle-wiggle {
+  animation: gentle-wiggle 0.7s infinite;
+}
+
+/* Editing mode styles */
+.editing-mode .routine-card {
+  @apply border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-lg p-4 mb-4 relative transition-all;
+}
+
+.editing-mode .edit-handle {
+  opacity: 1;
+  visibility: visible;
+}
+
+.edit-handle {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.editing-mode .routine-card:hover,
+.editing-mode .stack-card:hover {
+  @apply border-stacks-purple bg-stacks-soft-purple/10;
+}
+
+/* Support for touch interaction in edit mode */
+@media (pointer: coarse) {
+  .editing-mode .routine-card,
+  .editing-mode .stack-card {
+    touch-action: none;
+  }
+}
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
